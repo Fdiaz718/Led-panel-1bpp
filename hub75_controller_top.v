@@ -17,7 +17,7 @@ module hub75_controller_top(
     wire [5:0] row_top;
     wire [5:0] row_bottom;
 
-    // ============ 1. CONTADORES (Con Sync Fix) ============
+    //  1. CONTADORES 
     scan_counters SC(
         .clk(clk),
         .rst(rst),
@@ -28,10 +28,9 @@ module hub75_controller_top(
         .row_bottom(row_bottom)
     );
 
-    // Conectamos la dirección estable a los pines físicos
     assign addr = display_row;
 
-    // ============ 2. MEMORIA ============
+    // 2. MEMORIA
     // Usamos scan_row para leer el dato de la memoria con antelación
     wire [11:0] addr_top    = {row_top,    col};
     wire [11:0] addr_bottom = {row_bottom, col};
@@ -46,7 +45,7 @@ module hub75_controller_top(
         .pix_bottom(pix_bottom)
     );
 
-    // ============ 3. FSM (Mapeo de Colores Corregido) ============
+    // 3. FSM 
     panel_fsm FSM(
         .pix_top(pix_top),
         .pix_bottom(pix_bottom),
@@ -54,7 +53,7 @@ module hub75_controller_top(
         .r1(r1), .g1(g1), .b1(b1)
     );
 
-    // ============ 4. TIMING ============
+    // 4. TIMING
     delay_unit DU(
         .clk(clk),
         .rst(rst),
