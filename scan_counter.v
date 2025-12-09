@@ -25,15 +25,11 @@ module scan_counters(
             end
 
             // 2. Sincronización de Fila
-            // IMPORTANTE: Actualizamos la dirección del panel (addr_out) 
-            // solo cuando estamos en col == 0 (durante el Latch).
             if (col == 0) begin
                 addr_out <= scan_row; 
             end
 
             // 3. Avance de Lectura
-            // Avanzamos el lector de memoria un poco después (col == 1)
-            // para ir preparando los datos de la siguiente línea.
             if (col == 1) begin
                 scan_row <= scan_row + 1;
                 if (scan_row == 31) 
